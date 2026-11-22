@@ -5,6 +5,7 @@ import { toast } from 'sonner';
 
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
+import { useSettings } from '@/features/settings/hooks/useSettings';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,6 +23,14 @@ import {
 export function UserMenu() {
   const navigate = useNavigate();
   const { theme, setTheme } = useTheme();
+  const profile = useSettings().data?.profile;
+  const initials =
+    profile?.name
+      .split(/\s+/)
+      .map((w) => w[0])
+      .join('')
+      .slice(0, 2)
+      .toUpperCase() || 'ME';
 
   return (
     <DropdownMenu>
@@ -29,15 +38,17 @@ export function UserMenu() {
         <Button variant="ghost" size="icon" className="rounded-full" aria-label="Open account menu">
           <Avatar className="size-8">
             <AvatarFallback className="bg-primary/10 text-xs font-semibold text-primary">
-              ME
+              {initials}
             </AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel className="font-normal">
-          <p className="text-sm font-medium">My account</p>
-          <p className="text-xs text-muted-foreground">Personal workspace</p>
+          <p className="text-sm font-medium">{profile?.name ?? 'My account'}</p>
+          <p className="truncate text-xs text-muted-foreground">
+            {profile?.email ?? 'Personal workspace'}
+          </p>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem onSelect={() => navigate('/settings')}>
