@@ -21,6 +21,8 @@ export function useProcessingJob(topicId: string | undefined) {
     queryKey: queryKeys.ai.job(topicId ?? ''),
     queryFn: () => getProcessingJob(topicId ?? ''),
     enabled: Boolean(topicId),
+    // Keep polling while the tab is hidden; users often switch away during processing.
+    refetchIntervalInBackground: true,
     refetchInterval: (q) => {
       const stage = q.state.data?.stage;
       return stage && stage !== 'ready' && stage !== 'failed' ? POLL_MS : false;

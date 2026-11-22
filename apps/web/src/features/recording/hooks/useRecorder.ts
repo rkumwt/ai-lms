@@ -102,6 +102,7 @@ export function useRecorder({ config, getBubble, onFinished }: UseRecorderOption
         sizeBytes: blob.size,
         durationSec,
         createdAt: new Date().toISOString(),
+        uploaded: false,
       });
     };
     s.recorder = recorder;
