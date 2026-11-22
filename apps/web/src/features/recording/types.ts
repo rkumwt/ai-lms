@@ -17,6 +17,8 @@ export interface RecordingResult {
   sizeBytes: number;
   durationSec: number;
   createdAt: string;
+  /** True once handed to the (mock) API for AI processing. */
+  uploaded: boolean;
 }
 
 export type RecorderStatus =
