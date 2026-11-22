@@ -9,6 +9,7 @@ export default defineConfig({
   },
   server: { port: 5173 },
   build: {
-    chunkSizeWarningLimit: 1500,
+    // Excalidraw ships ~1.8 MB lazy chunks (fonts, mermaid); they load only in whiteboard mode.
+    chunkSizeWarningLimit: 2000,
   },
 });
